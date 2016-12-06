@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'androidquant'
 
 
 android {
@@ -27,4 +28,12 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.1'
     testCompile 'junit:junit:4.12'
+}
+
+pngquantOptimizer {
+    optimizer = 'zopfli'
+    compressionLevel = 9
+    iterations = 15
+    onlyOnRelease = true
+    logLevel = 'info'
 }
