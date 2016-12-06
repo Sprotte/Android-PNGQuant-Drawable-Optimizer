@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>io.sprotte</groupId>
+  <artifactId>AndroidQuantPlugin</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20161206.144400</timestamp>
+      <buildNumber>18</buildNumber>
+    </snapshot>
+    <lastUpdated>20161206144400</lastUpdated>
+  </versioning>
+</metadata>
