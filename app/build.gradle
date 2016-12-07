@@ -1,5 +1,16 @@
+
 apply plugin: 'com.android.application'
-apply plugin: 'androidquant'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+    }
+}
+
+//apply plugin: 'androidquant'
 
 
 android {
@@ -27,9 +38,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.0.1'
+
+
     testCompile 'junit:junit:4.12'
 }
-
+/*
 pngquantOptimizer {
     optimizer = 'zopfli'
     compressionLevel = 9
@@ -37,3 +50,4 @@ pngquantOptimizer {
     onlyOnRelease = true
     logLevel = 'info'
 }
+*/
