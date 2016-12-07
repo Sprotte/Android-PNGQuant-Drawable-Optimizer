@@ -4,6 +4,13 @@ apply plugin: 'maven'
 targetCompatibility = '1.7'
 sourceCompatibility = '1.7'
 
+sourceSets {
+    main {
+        java {
+            ""
+        }
+    }
+}
 
 dependencies {
     compile gradleApi()
@@ -26,5 +33,3 @@ uploadArchives {
         }
     }
 }
-
-

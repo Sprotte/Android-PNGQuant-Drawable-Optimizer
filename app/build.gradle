@@ -1,16 +1,6 @@
 
 apply plugin: 'com.android.application'
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-    }
-}
-
-//apply plugin: 'androidquant'
+apply plugin: 'androidquant'
 
 
 android {
