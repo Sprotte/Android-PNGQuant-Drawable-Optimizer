@@ -13,7 +13,7 @@ public final class NativeLibsLoaderUtil {
     public static void addLibsToJavaLibraryPath(final String tmpDirName) {
         try {
             String currentPath = System.getProperty("java.library.path");
-            System.setProperty(JAVA_LIBRARY_PATH,  tmpDirName);
+            System.setProperty(JAVA_LIBRARY_PATH, tmpDirName);
         /* Optionally add these two lines */
             System.setProperty("jna.library.path", tmpDirName);
             System.setProperty("jni.library.path", tmpDirName);

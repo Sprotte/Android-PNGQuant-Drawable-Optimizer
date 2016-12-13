@@ -1,7 +1,6 @@
 package org.pngquant;
 
-import org.pngquant.*;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
 
 /**
  * Starting point for the library. Holds configuration. Equivalent of liq_attr* in libimagequant.
@@ -21,9 +20,9 @@ public class PngQuant extends LiqObject {
 
     /**
      * 1-shot quantization and remapping with current settings.
-     * @see quantize()
      *
      * @return 8-bit indexed image or null on failure
+     * @see quantize()
      */
     public BufferedImage getRemapped(BufferedImage bufimg) {
         try {
@@ -31,12 +30,14 @@ public class PngQuant extends LiqObject {
             BufferedImage remapped = getRemapped(liqimg);
             liqimg.close();
             return remapped;
-        } catch(PngQuantException e) {
+        } catch (PngQuantException e) {
             return null;
         }
     }
 
-    /** @return remapped image or null on failure */
+    /**
+     * @return remapped image or null on failure
+     */
     public BufferedImage getRemapped(Image liqimg) {
         Result result = quantize(liqimg);
         if (result == null) return null;
@@ -48,14 +49,14 @@ public class PngQuant extends LiqObject {
     /**
      * Performs quantization (chooses optimal palette for the given Image).
      * Returned object can be used to customize remapping and reused to remap other images to the same palette.
-     * @link http://pngquant.org/lib/#liq_quantize_image
      *
      * @return null on failure
+     * @link http://pngquant.org/lib/#liq_quantize_image
      */
     public Result quantize(Image img) {
         try {
             return new Result(this, img);
-        } catch(PngQuantException e) {
+        } catch (PngQuantException e) {
             return null;
         }
     }
@@ -106,6 +107,8 @@ public class PngQuant extends LiqObject {
     }
 
     private static native long liq_attr_create();
+
     private static native long liq_attr_copy(long orig);
+
     private static native void liq_attr_destroy(long handle);
 }

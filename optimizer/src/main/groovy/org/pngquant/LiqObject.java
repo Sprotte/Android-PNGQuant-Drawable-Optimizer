@@ -5,9 +5,9 @@ import java.util.StringTokenizer;
 abstract class LiqObject {
     static {
         //libimagequant.jnilib or libimagequant.so must be in java.library.path
-        printPath();
-        NativeLibsLoaderUtil.addLibsToJavaLibraryPath("/Users/paul.sprotte/Projekte/Android-Quant/lib/src/main/jniLibs");
-        printPath();
+//        printPath();
+//        NativeLibsLoaderUtil.addLibsToJavaLibraryPath("/Users/paul.sprotte/Projekte/Android-Quant/lib/src/main/jniLibs");
+//        printPath();
         System.loadLibrary("imagequant");
     }
 

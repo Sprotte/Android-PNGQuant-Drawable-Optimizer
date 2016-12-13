@@ -1,2 +1,1 @@
-rootProject.name = 'Android-PNGQuant-Drawable-Optimizer'
-
+include ':app', ':optimizer'

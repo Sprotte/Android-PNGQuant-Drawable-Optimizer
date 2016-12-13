@@ -8,6 +8,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.incremental.IncrementalTaskInputs
 import org.pngquant.Image
 import org.pngquant.PngQuant
+
 import java.awt.image.BufferedImage
 
 class PNGQuantTask extends DefaultTask {
@@ -38,7 +39,7 @@ class PNGQuantTask extends DefaultTask {
             System.out.println("Hello World!");
 
             PngQuant attr = new PngQuant();
-            attr.setQuality(60,80);
+            attr.setQuality(60, 80);
             attr.setSpeed(1);
 
             BufferedImage img = null;
@@ -70,10 +71,10 @@ class PNGQuantTask extends DefaultTask {
             def changedFile = it.file
             if (changedFile.isDirectory()) {
                 optimizeDirectory(changedFile)
-            }else {
+            } else {
                 def filePath = changedFile.absolutePath
 
-                if(filePath =~ ~/.*\.png/ && !filePath.contains(".9.png")) {
+                if (filePath =~ ~/.*\.png/ && !filePath.contains(".9.png")) {
                     optimizer.optimize(project, compressionLevel, iterations, logLevel, changedFile)
                 }
             }

@@ -1,7 +1,9 @@
 package org.pngquant;
 
-import org.pngquant.*;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferByte;
+import java.awt.image.IndexColorModel;
 
 /**
  * Quantization result that holds palette and options for remapping.
@@ -23,10 +25,10 @@ public class Result extends LiqObject {
      */
     public BufferedImage getRemapped(Image orig_image) {
         byte[] pal = liq_get_palette(handle);
-        IndexColorModel color = new IndexColorModel(8, pal.length/4, pal, 0, true);
+        IndexColorModel color = new IndexColorModel(8, pal.length / 4, pal, 0, true);
         BufferedImage img = new BufferedImage(
-            orig_image.getWidth(), orig_image.getHeight(),
-            BufferedImage.TYPE_BYTE_INDEXED, color);
+                orig_image.getWidth(), orig_image.getHeight(),
+                BufferedImage.TYPE_BYTE_INDEXED, color);
 
         byte[] data = get8bitDataFromImage(img);
         if (data == null) return null;
@@ -39,10 +41,10 @@ public class Result extends LiqObject {
     /**
      * Dithering strength. Floyd-Steinberg is always used and in
      * speed settings 1-5 high-quality adaptive dithering is used.
-     * @see PngQuant.setSpeed()
-     * @link http://pngquant.org/lib/#liq_set_dithering_level
      *
      * @param dither_level Dithering in range 0 (none) and 1 (full)
+     * @link http://pngquant.org/lib/#liq_set_dithering_level
+     * @see PngQuant.setSpeed()
      */
     public native boolean setDitheringLevel(float dither_level);
 
@@ -50,19 +52,20 @@ public class Result extends LiqObject {
      * The default is 0.45455 (1/2.2) which is PNG's approximation of sRGB.
      */
     public native boolean setGamma(double gamma);
+
     public native double getGamma();
 
     /**
      * Mean Square Error of remapping of image used to create this result.
-     * @link http://pngquant.org/lib/#liq_get_quantization_error
      *
      * @return MSE or -1 if not available
+     * @link http://pngquant.org/lib/#liq_get_quantization_error
      */
     public native double getMeanSquareError();
 
     /**
-     * @link http://pngquant.org/lib/#liq_get_quantization_quality
      * @return Actually achieved quality in 0-100 range on scale compatible with PngQuant.setQuality()
+     * @link http://pngquant.org/lib/#liq_get_quantization_quality
      */
     public native int getQuality();
 
@@ -77,14 +80,17 @@ public class Result extends LiqObject {
         if (image.getType() == BufferedImage.TYPE_BYTE_INDEXED) {
             DataBuffer buffer = image.getRaster().getDataBuffer();
             if (buffer instanceof DataBufferByte) {
-                return ((DataBufferByte)buffer).getData();
+                return ((DataBufferByte) buffer).getData();
             }
         }
         return null;
     }
 
     private static native byte[] liq_get_palette(long handle);
+
     private static native long liq_quantize_image(long attr, long image);
+
     private static native boolean liq_write_remapped_image(long handle, long image, byte[] buffer);
+
     private static native void liq_result_destroy(long handle);
 }

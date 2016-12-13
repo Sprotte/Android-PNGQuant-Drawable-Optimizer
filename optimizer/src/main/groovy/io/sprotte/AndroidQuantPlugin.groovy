@@ -18,7 +18,8 @@ class AndroidQuantPlugin implements Plugin<Project> {
         }
     }
 
-    private static void applyAndroid(Project project, DomainObjectCollection<BaseVariant> variants) {
+    private
+    static void applyAndroid(Project project, DomainObjectCollection<BaseVariant> variants) {
         project.extensions.create('pngquantOptimizer', PNGQuantOptimizerExtension)
 
         def ext = project.extensions['pngquantOptimizer'] as PNGQuantOptimizerExtension
@@ -26,17 +27,17 @@ class AndroidQuantPlugin implements Plugin<Project> {
         variants.all { variant ->
             def variantName = variant.name.capitalize()
 
-            if(ext.onlyOnRelease && !'release'.equalsIgnoreCase(variant.buildType.name) ){
+            if (ext.onlyOnRelease && !'release'.equalsIgnoreCase(variant.buildType.name)) {
                 return
             }
 
             def task = project.tasks.create("optimize${variantName}Drawable", PNGQuantTask) {
                 it.description = "PNG Quant optimization"
                 it.module = project.name
-                it.optimizerType    = ext.optimizer
+                it.optimizerType = ext.optimizer
                 it.compressionLevel = ext.compressionLevel
-                it.iterations   = ext.iterations
-                it.logLevel     = ext.logLevel
+                it.iterations = ext.iterations
+                it.logLevel = ext.logLevel
                 it.drawableDirs = variant.mergeResources.outputDir
             }
 
