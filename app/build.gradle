@@ -5,13 +5,12 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
-//        classpath 'com.github.Sprotte:Android-PNGQuant-Drawable-Optimizer:0.4.1'
         classpath group: 'io.sprotte', name: 'optimizer', version: '1.0-SNAPSHOT'
     }
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'androidquant'
+//apply plugin: 'androidquant'
 
 android {
     compileSdkVersion 25
