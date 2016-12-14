@@ -4,14 +4,6 @@ import java.util.StringTokenizer;
 
 abstract class LiqObject {
 
-    static {
-        //libimagequant.jnilib or libimagequant.so must be in java.library.path
-//        printPath();
-//        NativeLibsLoaderUtil.addLibsToJavaLibraryPath("/Users/jan.rabe/Documents/kibotu/Android-PNGQuant-Drawable-Optimizer/optimizer/src/main/jniLibs");
-//        printPath();
-//        System.loadLibrary("imagequant");
-    }
-
     private static void printPath() {
         String property = System.getProperty("java.library.path");
         StringTokenizer parser = new StringTokenizer(property, ";");
@@ -19,7 +11,6 @@ abstract class LiqObject {
             System.err.println(parser.nextToken());
         }
     }
-
     long handle;
 
     /**

@@ -46,8 +46,12 @@ class AndroidQuantPlugin implements Plugin<Project> {
             if (ext.onlyOnRelease && !'release'.equalsIgnoreCase(variant.buildType.name)) {
                 return
             }
+            System.out.println("Variant "+variants);
+            System.out.println("optimize${variantName}Drawable");
 
             def task = project.tasks.create("optimize${variantName}Drawable", PNGQuantTask) {
+                System.out.println("project.tasks.create");
+
                 it.description = "PNG Quant optimization"
                 it.module = project.name
                 it.optimizerType = ext.optimizer
