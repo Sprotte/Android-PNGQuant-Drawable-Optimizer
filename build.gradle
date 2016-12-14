@@ -8,8 +8,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath group: 'io.sprotte', name: 'AndroidQuantPlugin', version: '1.0-SNAPSHOT'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath "me.sgeb.gradle:gradle-native-artifacts-plugin:1.+"
     }
 }
 
