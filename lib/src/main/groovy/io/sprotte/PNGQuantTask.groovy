@@ -37,25 +37,7 @@ class PNGQuantTask extends DefaultTask {
         try {
             System.out.println("Hello World!");
 
-            PngQuant attr = new PngQuant();
-            attr.setQuality(60,80);
-            attr.setSpeed(1);
 
-            BufferedImage img = null;
-            img = ImageIO.read(new File("/Users/paul.sprotte/Desktop/PNGQuant-JNITEST/src/io/sprotte/lion_PNG3805.png"));
-
-            Image image = new Image(attr, img);
-
-            attr.getRemapped(image);
-
-
-            File outputfile = new File("saved.png");
-            try {
-                ImageIO.write(attr.getRemapped(image), "png", outputfile);
-                System.out.println("done");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }

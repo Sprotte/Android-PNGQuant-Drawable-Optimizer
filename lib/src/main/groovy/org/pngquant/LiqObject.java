@@ -6,7 +6,7 @@ abstract class LiqObject {
     static {
         // libimagequant.jnilib or libimagequant.so must be in java.library.path
         printPath();
-        NativeLibsLoaderUtil.addLibsToJavaLibraryPath("/Users/paul.sprotte/Projekte/Android-Quant/lib/src/main/jniLibs");
+        NativeLibsLoaderUtil.addLibsToJavaLibraryPath("/Users/paul.sprotte/Projects/Android-PNGQuant-Drawable-Optimizer/lib/src/main/jniLibs");
         printPath();
         System.loadLibrary("imagequant");
     }
@@ -20,7 +20,6 @@ abstract class LiqObject {
             System.err.println(parser.nextToken());
         }
     }
-
     long handle;
 
     /**
