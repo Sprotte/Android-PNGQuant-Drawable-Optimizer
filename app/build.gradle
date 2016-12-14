@@ -10,7 +10,7 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
-//apply plugin: 'androidquant'
+apply plugin: 'androidquant'
 
 android {
     compileSdkVersion 25

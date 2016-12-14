@@ -11,20 +11,6 @@ class AndroidQuantPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
 
-        try {
-            new File("build/paul/").mkdirs()
-            if (!new File("build/paul/libimagequant.jniLib").exists())
-                new File("build/paul/", "libimagequant.jniLib") << new URL("https://github.com/Sprotte/Android-PNGQuant-Drawable-Optimizer/raw/master/src/main/jniLibs/libimagequant.jnilib").getText()
-        } catch (Exception e1) {
-            e1.printStackTrace()
-        }
-        try {
-            NativeLibsLoaderUtil.addLibsToJavaLibraryPath("build/paul");
-            System.loadLibrary("imagequant");
-        } catch (Exception e) {
-            e.printStackTrace()
-        }
-
         if (project.plugins.hasPlugin('com.android.application')) {
             applyAndroid(project, (DomainObjectCollection<BaseVariant>) project.android.applicationVariants);
         } else if (project.plugins.hasPlugin('com.android.library')) {
