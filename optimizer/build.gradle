@@ -21,8 +21,8 @@ uploadArchives {
         }
     }
 }
-def someFile = file('src/main/jniLibs/libimagequant.jnilib')
+def jniLib = file('src/main/jniLibs/libimagequant.jnilib')
 
 artifacts {
-    archives someFile
+    archives jniLib
 }
