@@ -21,3 +21,8 @@ uploadArchives {
         }
     }
 }
+def someFile = file('src/main/jniLibs/libimagequant.jnilib')
+
+artifacts {
+    archives someFile
+}
