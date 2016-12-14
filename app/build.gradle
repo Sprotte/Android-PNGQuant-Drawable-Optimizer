@@ -31,14 +31,6 @@ android {
     }
 }
 
-task bla() {
-
-    new File("build/paul/").mkdirs()
-
-    if (!new File("build/paul/libimagequant.jniLib").exists())
-        new File("build/paul/", "libimagequant.jniLib") << new URL("https://github.com/Sprotte/Android-PNGQuant-Drawable-Optimizer/raw/master/src/main/jniLibs/libimagequant.jnilib").getText()
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
