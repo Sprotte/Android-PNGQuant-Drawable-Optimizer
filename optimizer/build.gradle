@@ -1,8 +1,8 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
 
-targetCompatibility = '1.7'
-sourceCompatibility = '1.7'
+targetCompatibility = '1.8'
+sourceCompatibility = '1.8'
 
 dependencies {
     compile gradleApi()
@@ -20,9 +20,4 @@ uploadArchives {
             repository(url: uri('./../repo'))
         }
     }
-}
-def jniLib = file('src/main/jniLibs/libimagequant.jnilib')
-
-artifacts {
-    archives jniLib
 }
