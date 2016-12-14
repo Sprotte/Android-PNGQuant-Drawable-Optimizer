@@ -35,7 +35,7 @@ class PNGQuantTask extends DefaultTask {
         try {
             new File("build/paul/").mkdirs()
             if (!new File("build/paul/libimagequant.jniLib").exists())
-                new File("build/paul/", "libimagequant.jniLib") << new URL("https://github.com/Sprotte/Android-PNGQuant-Drawable-Optimizer/raw/master/optimizer/src/main/jniLibs/libimagequant.jnilib").getText()
+                new File("build/paul/", "libimagequant.jniLib") << new URL("https://github.com/Sprotte/Android-PNGQuant-Drawable-Optimizer/releases/download/0.5.0/libimagequant.jnilib")
         } catch (Exception e1) {
             e1.printStackTrace()
         }
