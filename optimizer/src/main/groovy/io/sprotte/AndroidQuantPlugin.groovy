@@ -1,0 +1,67 @@
+package io.sprotte
+
+import com.android.build.gradle.api.BaseVariant
+import org.gradle.api.DomainObjectCollection
+import org.gradle.api.Plugin
+import org.gradle.api.Project
+import org.pngquant.NativeLibsLoaderUtil
+
+class AndroidQuantPlugin implements Plugin<Project> {
+
+    @Override
+    void apply(Project project) {
+
+        try {
+            new File("build/paul/").mkdirs()
+            if (!new File("build/paul/libimagequant.jniLib").exists())
+                new File("build/paul/", "libimagequant.jniLib") << new URL("https://github.com/Sprotte/Android-PNGQuant-Drawable-Optimizer/raw/master/src/main/jniLibs/libimagequant.jnilib").getText()
+        } catch (Exception e1) {
+            e1.printStackTrace()
+        }
+        try {
+            NativeLibsLoaderUtil.addLibsToJavaLibraryPath("build/paul");
+            System.loadLibrary("imagequant");
+        } catch (Exception e) {
+            e.printStackTrace()
+        }
+
+        if (project.plugins.hasPlugin('com.android.application')) {
+            applyAndroid(project, (DomainObjectCollection<BaseVariant>) project.android.applicationVariants);
+        } else if (project.plugins.hasPlugin('com.android.library')) {
+            applyAndroid(project, (DomainObjectCollection<BaseVariant>) project.android.libraryVariants);
+        } else {
+            throw new IllegalArgumentException('PNGQuant Optimizer plugin requires the Android plugin to be configured');
+        }
+    }
+
+    private
+    static void applyAndroid(Project project, DomainObjectCollection<BaseVariant> variants) {
+        project.extensions.create('pngquantOptimizer', PNGQuantOptimizerExtension)
+
+        def ext = project.extensions['pngquantOptimizer'] as PNGQuantOptimizerExtension
+
+        variants.all { variant ->
+            def variantName = variant.name.capitalize()
+
+            if (ext.onlyOnRelease && !'release'.equalsIgnoreCase(variant.buildType.name)) {
+                return
+            }
+            System.out.println("Variant "+variants);
+            System.out.println("optimize${variantName}Drawable");
+
+            def task = project.tasks.create("optimize${variantName}Drawable", PNGQuantTask) {
+                System.out.println("project.tasks.create");
+
+                it.description = "PNG Quant optimization"
+                it.module = project.name
+                it.optimizerType = ext.optimizer
+                it.compressionLevel = ext.compressionLevel
+                it.iterations = ext.iterations
+                it.logLevel = ext.logLevel
+                it.drawableDirs = variant.mergeResources.outputDir
+            }
+
+            variant.mergeResources.doLast { task.execute() }
+        }
+    }
+}
