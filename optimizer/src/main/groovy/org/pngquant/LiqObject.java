@@ -3,12 +3,13 @@ package org.pngquant;
 import java.util.StringTokenizer;
 
 abstract class LiqObject {
+
     static {
         //libimagequant.jnilib or libimagequant.so must be in java.library.path
 //        printPath();
-//        NativeLibsLoaderUtil.addLibsToJavaLibraryPath("/Users/paul.sprotte/Projekte/Android-Quant/lib/src/main/jniLibs");
+//        NativeLibsLoaderUtil.addLibsToJavaLibraryPath("/Users/jan.rabe/Documents/kibotu/Android-PNGQuant-Drawable-Optimizer/optimizer/src/main/jniLibs");
 //        printPath();
-        System.loadLibrary("imagequant");
+//        System.loadLibrary("imagequant");
     }
 
     private static void printPath() {

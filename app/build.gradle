@@ -1,17 +1,17 @@
 buildscript {
     repositories {
-        // maven { url uri('./../repo') }
+        maven { url uri('./../repo') }
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
 //        classpath 'com.github.Sprotte:Android-PNGQuant-Drawable-Optimizer:0.4.1'
-        // classpath group: 'io.sprotte', name: 'optimizer', version: '1.0-SNAPSHOT'
+        classpath group: 'io.sprotte', name: 'optimizer', version: '1.0-SNAPSHOT'
     }
 }
 
 apply plugin: 'com.android.application'
-// apply plugin: 'androidquant'
+apply plugin: 'androidquant'
 
 android {
     compileSdkVersion 25
@@ -30,6 +30,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+task bla() {
+
+    new File("build/paul/").mkdirs()
+
+    if (!new File("build/paul/libimagequant.jniLib").exists())
+        new File("build/paul/", "libimagequant.jniLib") << new URL("https://github.com/Sprotte/Android-PNGQuant-Drawable-Optimizer/raw/master/src/main/jniLibs/libimagequant.jnilib").getText()
 }
 
 dependencies {
