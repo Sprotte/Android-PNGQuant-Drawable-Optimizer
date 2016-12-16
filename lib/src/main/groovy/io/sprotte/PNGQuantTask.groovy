@@ -9,9 +9,9 @@ import org.gradle.api.tasks.incremental.IncrementalTaskInputs
 import org.pngquant.Image
 import org.pngquant.PngQuant
 import java.awt.image.BufferedImage
+import io.sprotte.Helper
 
 class PNGQuantTask extends DefaultTask {
-    String greeting = 'hello from Sprotte'
 
     @Input
     def module
@@ -34,19 +34,7 @@ class PNGQuantTask extends DefaultTask {
     void optimize(IncrementalTaskInputs inputs) {
         println ":$module:$name"
 
-        try {
-            System.out.println("Hello World!");
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-
-
         def optimizer = new PNGQuantOptimizer()
-
 
         inputs.outOfDate {
             def changedFile = it.file
@@ -54,12 +42,17 @@ class PNGQuantTask extends DefaultTask {
                 optimizeDirectory(changedFile)
             }else {
                 def filePath = changedFile.absolutePath
-
                 if(filePath =~ ~/.*\.png/ && !filePath.contains(".9.png")) {
+                    //println('!!!!!!!!!!!!!!!!!!!!!!')
                     optimizer.optimize(project, compressionLevel, iterations, logLevel, changedFile)
+                    //println(optimizer.total)
+                    //println('!!!!!!!!!!!!!!!!!!!!!!')
                 }
             }
         }
+        println('Total saved: '+ Helper.bytesToHuman(optimizer.total))
+
+
     }
 
     def optimizeDirectory(File directory) {
