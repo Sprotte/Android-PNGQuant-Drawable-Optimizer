@@ -1,16 +1,7 @@
 package org.pngquant;
 
-import java.util.StringTokenizer;
-
 abstract class LiqObject {
 
-    private static void printPath() {
-        String property = System.getProperty("java.library.path");
-        StringTokenizer parser = new StringTokenizer(property, ";");
-        while (parser.hasMoreTokens()) {
-            System.err.println(parser.nextToken());
-        }
-    }
     long handle;
 
     /**

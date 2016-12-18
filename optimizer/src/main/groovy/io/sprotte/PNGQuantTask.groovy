@@ -1,5 +1,4 @@
 package io.sprotte
-
 import groovy.io.FileType
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
@@ -9,7 +8,6 @@ import org.gradle.api.tasks.incremental.IncrementalTaskInputs
 import org.pngquant.NativeLibsLoaderUtil
 
 class PNGQuantTask extends DefaultTask {
-    String greeting = 'hello from Sprotte'
 
     @Input
     def module
@@ -34,11 +32,10 @@ class PNGQuantTask extends DefaultTask {
 
         try {
             new File("build/paul/").mkdirs()
+            if (!new File("build/paul/libimagequant.jniLib").exists()){
+                new File("build/paul/", "libimagequant.jnilib") << new URL("http://kibotu.net/download/libimagequant.jnilib").getBytes()
+            }
         } catch (Exception e1) {
-            if (!new File("build/paul/libimagequant.jniLib").exists())
-//                new File("build/paul/", "libimagequant.jniLib") << new URL("https://github.com/Sprotte/Android-PNGQuant-Drawable-Optimizer/releases/download/0.5.0/libimagequant.jnilib")
-//                new File("build/paul/", "libimagequant.jniLib") << new URL("https://github.com/Sprotte/Android-PNGQuant-Drawable-Optimizer/raw/master/optimizer/src/main/jniLibs/libimagequant.jnilib").getText()
-                new File("build/paul/", "libimagequant.jniLib") << new URL("http://kibotu.net/download/libimagequant.jnilib").getBytes()
             e1.printStackTrace()
         }
         try {
@@ -62,6 +59,7 @@ class PNGQuantTask extends DefaultTask {
                 }
             }
         }
+        println('Total saved: '+ Helper.bytesToHuman(optimizer.total))
     }
 
     def optimizeDirectory(File directory) {

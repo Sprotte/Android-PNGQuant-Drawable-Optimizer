@@ -1,37 +1,17 @@
+package io.sprotte
+
 import org.gradle.api.Project
 import org.pngquant.Image
 import org.pngquant.PngQuant
 
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
+import java.awt.image.DataBufferByte
 import java.text.DecimalFormat
 
 class PNGQuantOptimizer {
 
-    public static String floatForm (double d)
-    {
-        return new DecimalFormat("#.##").format(d);
-    }
-
-    public static String bytesToHuman (long size)
-    {
-        long Kb = 1  * 1024;
-        long Mb = Kb * 1024;
-        long Gb = Mb * 1024;
-        long Tb = Gb * 1024;
-        long Pb = Tb * 1024;
-        long Eb = Pb * 1024;
-
-        if (size <  Kb)                 return floatForm(        size     ) + " byte";
-        if (size >= Kb && size < Mb)    return floatForm((double)size / Kb) + " Kb";
-        if (size >= Mb && size < Gb)    return floatForm((double)size / Mb) + " Mb";
-        if (size >= Gb && size < Tb)    return floatForm((double)size / Gb) + " Gb";
-        if (size >= Tb && size < Pb)    return floatForm((double)size / Tb) + " Tb";
-        if (size >= Pb && size < Eb)    return floatForm((double)size / Pb) + " Pb";
-        if (size >= Eb)                 return floatForm((double)size / Eb) + " Eb";
-
-        return "???";
-    }
+    public long total
 
     void optimize(Project project, int compressionLevel, int iterations, String logLevel, File[] files) {
 
@@ -39,32 +19,41 @@ class PNGQuantOptimizer {
 
             def originalFileSize = it.length()
 
+            System.out.print('Optimized: ' + it.name)
+
             try {
 
-                PngQuant attr = new PngQuant();
-                attr.setQuality(60,80);
-                attr.setSpeed(1);
+                PngQuant attr = new PngQuant()
+                attr.setQuality(60, 80)
+                attr.setSpeed(1)
 
-                BufferedImage img = null;
-                img = ImageIO.read(it);
+                BufferedImage imgIn = null
+                imgIn = ImageIO.read(it)
 
-                Image image = new Image(attr, img);
+                Image image = new Image(attr, imgIn)
+                BufferedImage imgOut = attr.getRemapped(image)
 
-                attr.getRemapped(image);
+                if (imgOut != null) {
+                    try {
+                        byte[] imageInBytes = ((DataBufferByte) imgIn.getData().getDataBuffer()).getData();
+                        byte[] imageOutBytes = ((DataBufferByte) imgOut.getData().getDataBuffer()).getData();
+                        //Debug Stuff to find out if the new version ist bigger than the old but seems to be not working
+                        //System.out.print('Lenght IN: ' + imageInBytes.length+"!!!!!!")
+                        //System.out.print('Lenght OUT: ' + imageOutBytes.length+"!!!!!!")
+                        //System.out.print('BOOL : ' +  (imageInBytes.length > imageOutBytes.length))
 
-                try {
-                    img = attr.getRemapped(image);
-                    ImageIO.write(attr.getRemapped(image), "png", it);
+                        ImageIO.write(imgOut, "png", it)
+                        def newFileSize = it.length()
+                        total = total + (originalFileSize - newFileSize)
+                        def percent =  (originalFileSize - newFileSize) / (originalFileSize / 100)
+                        System.out.print("  ${Helper.bytesToHuman(originalFileSize)} / ${Helper.bytesToHuman(newFileSize)} -> ${Helper.bytesToHuman(originalFileSize - newFileSize)} ~ ${new DecimalFormat("#.00").format(percent)}% \n\r")
 
-                    def newFileSize = it.length()
-
-                    println "Done " + it.name + " Orignal Size: " + bytesToHuman(originalFileSize) + " New Size: " + bytesToHuman(newFileSize)
-
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace()
+                    }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                e.printStackTrace()
             }
         }
     }
